@@ -16,6 +16,9 @@ import (
 	"strings"
 	"time"
 
+	"github.com/caddyserver/caddy/v2"
+	"go.uber.org/zap"
+
 	"github.com/juju/errors"
 	"github.com/rs/zerolog"
 )
@@ -111,6 +114,7 @@ func genMsg(r *http.Request) ([]byte, error) {
 		msg += k + ":" + val + "\n"
 	}
 	msg = strings.TrimSpace(msg)
+	caddy.Log().Info("msg", zap.String("msg", msg))
 	return []byte(msg), nil
 }
 
