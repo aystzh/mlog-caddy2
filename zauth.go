@@ -22,6 +22,7 @@ import (
 	"github.com/caddyserver/caddy/v2/caddyconfig/caddyfile"
 	"github.com/caddyserver/caddy/v2/caddyconfig/httpcaddyfile"
 	"github.com/caddyserver/caddy/v2/modules/caddyhttp"
+	"go.uber.org/zap"
 
 	//"github.com/juju/errors"
 	"github.com/liuzl/store"
@@ -39,8 +40,8 @@ var authDB *store.LevelStore
 // Middleware implements an HTTP handler that implements the
 // ak, sk auth.
 type Middleware struct {
-	AuthDBDir     string `json:"auth_db_dir,omitempty"`
-	AuthAdminAddr string `json:"auth_admin_addr,omitempty`
+	AuthDBDir     string `json:"log_dir,omitempty"`
+	AuthAdminAddr string `json:"split_by,omitempty`
 }
 
 // CaddyModule returns the Caddy module information.
@@ -83,7 +84,10 @@ func (m *Middleware) getAuthDB() *store.LevelStore {
 
 // ServeHTTP implements caddyhttp.MiddlewareHandler.
 func (m Middleware) ServeHTTP(w http.ResponseWriter, r *http.Request, next caddyhttp.Handler) error {
+	caddy.Log().Info("msg", zap.String("msg", "ServeHTTP"))
+
 	m.authorize(r)
+
 	/* if pass, err := m.authorize(r); !pass {
 		if err != nil {
 			ctx := r.Context()
@@ -110,10 +114,12 @@ func (m *Middleware) UnmarshalCaddyfile(d *caddyfile.Dispenser) error {
 			switch d.Val() {
 			case "log_dir":
 				if d.NextArg() {
+					caddy.Log().Info("msg", zap.String("log_dir", d.Val()))
 					m.AuthDBDir = d.Val()
 				}
 			case "split_by":
 				if d.NextArg() {
+					caddy.Log().Info("msg", zap.String("split_by", d.Val()))
 					m.AuthAdminAddr = d.Val()
 				}
 			}

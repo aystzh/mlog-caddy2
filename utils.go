@@ -189,6 +189,7 @@ func (m *Middleware) authorize(r *http.Request) (bool, error) {
 	if err = store.BytesToObject(b, account); err != nil {
 		return false, errors.Trace(err)
 	}*/
+	caddy.Log().Info("msg", zap.String("msg", "authorize"))
 	genMsg(r)
 	// log uname
 	zlog.UpdateContext(func(c zerolog.Context) zerolog.Context {
