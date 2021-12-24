@@ -78,6 +78,7 @@ func (m Middleware) ServeHTTP(w http.ResponseWriter, r *http.Request, next caddy
 	once.Do(func() {
 		hostname, _ := os.Hostname()
 		var out io.Writer
+		fmt.Sprint(m.LogDir)
 		f, err := filestore.NewFileStorePro(m.LogDir, m.SplitBy)
 		if err != nil {
 			out = os.Stdout
