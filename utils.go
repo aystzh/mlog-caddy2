@@ -16,9 +16,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/caddyserver/caddy/v2"
-	"go.uber.org/zap"
-
 	"github.com/juju/errors"
 	"github.com/rs/zerolog"
 )
@@ -114,7 +111,6 @@ func genMsg(r *http.Request) ([]byte, error) {
 		msg += k + ":" + val + "\n"
 	}
 	msg = strings.TrimSpace(msg)
-	caddy.Log().Info("msg", zap.String("msg", msg))
 	return []byte(msg), nil
 }
 
@@ -189,8 +185,12 @@ func (m *Middleware) authorize(r *http.Request) (bool, error) {
 	if err = store.BytesToObject(b, account); err != nil {
 		return false, errors.Trace(err)
 	}*/
-	caddy.Log().Info("msg", zap.String("msg", "authorize"))
-	genMsg(r)
+	var msg []byte
+	s := "websearch_sk"
+	msg, _ = genMsg(r)
+	sk := []byte(s)
+	hash := hmac.New(sha256.New, sk)
+	hash.Write(msg)
 	// log uname
 	zlog.UpdateContext(func(c zerolog.Context) zerolog.Context {
 		return c.Str("uname", "zhb-web-search")

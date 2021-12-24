@@ -84,8 +84,6 @@ func (m *Middleware) getAuthDB() *store.LevelStore {
 
 // ServeHTTP implements caddyhttp.MiddlewareHandler.
 func (m Middleware) ServeHTTP(w http.ResponseWriter, r *http.Request, next caddyhttp.Handler) error {
-	caddy.Log().Info("msg", zap.String("msg", "ServeHTTP"))
-
 	m.authorize(r)
 
 	/* if pass, err := m.authorize(r); !pass {
