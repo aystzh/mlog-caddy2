@@ -1,4 +1,4 @@
-module github.com/liuzl/caddy2-zauth
+module github.com/aystzh/mlog-caddy2
 
 go 1.15
 
