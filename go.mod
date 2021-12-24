@@ -12,3 +12,5 @@ require (
 	go.uber.org/zap v1.17.0 // indirect
 	zliu.org/goutil v0.0.0-20210628080224-310b49755b5f
 )
+replace github.com/liuzl/caddy2-zauth => github.com/aystzh/mlog-caddy2 v0.0.0-20211224062750-3b56276f9024 // indirect
+
