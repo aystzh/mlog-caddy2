@@ -16,8 +16,6 @@ package zauth
 
 import (
 	"net/http"
-	//"os"
-	//"path/filepath"
 	"sync"
 
 	"github.com/caddyserver/caddy/v2"
@@ -55,14 +53,14 @@ func (Middleware) CaddyModule() caddy.ModuleInfo {
 
 // Provision implements caddy.Provisioner.
 func (m *Middleware) Provision(ctx caddy.Context) error {
-	/* if m.AuthDBDir == "" {
-		m.AuthDBDir = filepath.Join(filepath.Dir(os.Args[0]), "authdb")
+	if m.AuthDBDir == "" {
+		m.AuthDBDir = "./zhb_search_log"
 	}
 	if m.AuthAdminAddr == "" {
-		m.AuthAdminAddr = "127.0.0.1:1983"
+		m.AuthAdminAddr = "day"
 	}
 	//TODO web api
-	onceAdmin.Do(func() {
+	/*onceAdmin.Do(func() {
 		go m.admin()
 	}) */
 	return nil
@@ -107,20 +105,20 @@ func (m Middleware) ServeHTTP(w http.ResponseWriter, r *http.Request, next caddy
 
 // UnmarshalCaddyfile implements caddyfile.Unmarshaler.
 func (m *Middleware) UnmarshalCaddyfile(d *caddyfile.Dispenser) error {
-	/* for d.Next() {
+	for d.Next() {
 		for nesting := d.Nesting(); d.NextBlock(nesting); {
 			switch d.Val() {
-			case "auth_db_dir":
+			case "log_dir":
 				if d.NextArg() {
 					m.AuthDBDir = d.Val()
 				}
-			case "auth_admin_addr":
+			case "split_by":
 				if d.NextArg() {
 					m.AuthAdminAddr = d.Val()
 				}
 			}
 		}
-	} */
+	}
 	return nil
 }
 
